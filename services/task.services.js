@@ -1,4 +1,3 @@
-import { request } from 'express';
 import TaskModel from '../models/Task.model';
 
 const getAllTask = async (req, res) => {

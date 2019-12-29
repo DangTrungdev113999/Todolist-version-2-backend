@@ -2,17 +2,14 @@ import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
-import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
+import connectDB from './config/connectDB';
 
 import taskRouter from './routes/task.router';
 
 const app = express();
 
-mongoose.connect('mongodb://localhost/todolist-version-2', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+connectDB();
 
 app.use(logger('dev'));
 app.use(express.json());
