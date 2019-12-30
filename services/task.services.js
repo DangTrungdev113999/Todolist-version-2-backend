@@ -2,7 +2,11 @@ import TaskModel from '../models/Task.model';
 
 const getAllTask = async (req, res) => {
   try {
-    const listTask = await TaskModel.find()
+    const keyword = req.query.q;
+
+    const listTask = await TaskModel.find({
+      title: { $regex: new RegExp(keyword, 'i') },
+    })
       .limit(10)
       .sort({ createdAt: -1 })
       .exec();
@@ -35,6 +39,7 @@ const updateTask = async (req, res) => {
       title: req.body.title,
       description: req.body.description,
       status: req.body.status,
+      updatedAt: Date.now(),
     };
 
     const result = await TaskModel.updateOne({ _id: req.params.id }, data);
