@@ -2,7 +2,11 @@ import TaskModel from '../models/Task.model';
 
 const getAllTask = async (req, res) => {
   try {
-    const listTask = await TaskModel.find().exec();
+    const listTask = await TaskModel.find()
+      .limit(10)
+      .sort({ createdAt: -1 })
+      .exec();
+
     res.status(200).json(listTask);
   } catch (error) {
     res.status(500).json(error);
@@ -15,6 +19,7 @@ const createTask = async (req, res) => {
       title: req.body.title,
       description: req.body.description,
       status: req.body.status,
+      createdAt: Date.now(),
     };
 
     const newTask = await TaskModel.create(data);
